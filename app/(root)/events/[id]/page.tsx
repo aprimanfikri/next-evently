@@ -16,7 +16,7 @@ const EventDetails = async ({
 }: SearchParamProps) => {
   const event = await getEventById(id);
 
-  const relatedEvent = await getRelatedEventsByCategory({
+  const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
     eventId: event._id,
     page: searchParams.page as string,
@@ -103,13 +103,13 @@ const EventDetails = async ({
       <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
         <h2 className="h2-bold">Related Events</h2>
         <Collection
-          data={relatedEvent?.data}
+          data={relatedEvents?.data}
           emptyTitle="No Events Found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={2}
+          limit={3}
+          page={searchParams.page as string}
+          totalPages={relatedEvents?.totalPages}
         />
       </section>
 
@@ -120,9 +120,9 @@ const EventDetails = async ({
           emptyTitle="No Events Found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={2}
+          limit={3}
+          page={searchParams.page as string}
+          totalPages={relatedEvents?.totalPages}
         />
       </section>
     </>
